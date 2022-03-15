@@ -35,8 +35,6 @@ module.exports = {
         'no-useless-constructor': [0],
         'no-use-before-define': [0],
 
-        'react/jsx-indent': [2, 4],
-        'react/jsx-indent-props': [2, 4],
         'react/jsx-filename-extension': [2, {
             extensions: ['.jsx', '.tsx'],
         }],
