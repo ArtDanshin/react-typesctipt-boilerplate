@@ -1,14 +1,22 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import {RuleSetRule} from 'webpack';
+import { RuleSetRule } from 'webpack';
 
-export default function(): RuleSetRule {
+import { isProduction } from '../utils/helper';
+
+export default function (): RuleSetRule {
   return {
     test: /\.styl$/,
     use: [
-      MiniCssExtractPlugin.loader,
+      isProduction() ? MiniCssExtractPlugin.loader : 'style-loader',
       {
         loader: 'css-loader',
-        options: { sourceMap: true }
+        options: {
+          sourceMap: true,
+          modules: {
+            localIdentName: '[name]__[local]___[hash:base64:5]',
+            exportLocalsConvention: 'camelCase',
+          },
+        },
       },
       {
         loader: 'postcss-loader',
@@ -17,13 +25,13 @@ export default function(): RuleSetRule {
             ident: 'postcss',
             config: false,
             plugins: [
-              'postcss-preset-env'
-            ]
+              'postcss-preset-env',
+            ],
           },
           sourceMap: true,
-        }
+        },
       },
-      'stylus-loader'
-    ]
+      'stylus-loader',
+    ],
   };
-};
+}

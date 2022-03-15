@@ -19,7 +19,7 @@ node_modules
 .idea
 
 # Compiled files
-/public/assets
+/public
 
 # Build files info
 /config/manifest.json

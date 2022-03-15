@@ -1,11 +1,13 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import {RuleSetRule} from 'webpack';
+import { RuleSetRule } from 'webpack';
 
-export default function(): RuleSetRule {
+import { isProduction } from '../utils/helper';
+
+export default function (): RuleSetRule {
   return {
     test: /\.css$/,
     use: [
-      MiniCssExtractPlugin.loader,
+      isProduction() ? MiniCssExtractPlugin.loader : 'style-loader',
       'css-loader',
       {
         loader: 'postcss-loader',
@@ -14,12 +16,12 @@ export default function(): RuleSetRule {
             ident: 'postcss',
             config: false,
             plugins: [
-              'postcss-preset-env'
-            ]
+              'postcss-preset-env',
+            ],
           },
           sourceMap: true,
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
-};
+}
